@@ -1,11 +1,13 @@
-package me.zoxouu.config.json;
+package me.zoxouu.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.marhali.json5.Json5;
 import de.marhali.json5.Json5Element;
 import de.marhali.json5.Json5Object;
-import me.zoxouu.config.IOUtils;
+import me.zoxouu.config.annotation.ConfigComment;
+import me.zoxouu.config.annotation.ConfigField;
+import me.zoxouu.config.utils.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class JsonConfig {
             for (Field field : getConfigFields()) {
                 field.setAccessible(true);
 
-                JsonConfigComment comment = field.getAnnotation(JsonConfigComment.class);
+                ConfigComment comment = field.getAnnotation(ConfigComment.class);
                 if (comment != null) {
                     jsonWithComments.append("  // ").append(comment.value()).append("\n");
                 }
@@ -65,7 +67,7 @@ public class JsonConfig {
             throw new NullPointerException("You need to define the class fields using setInstance() in your config.");
         }
         return Arrays.stream(instance.getClass().getDeclaredFields())
-                .filter(f -> f.isAnnotationPresent(JsonConfigField.class))
+                .filter(f -> f.isAnnotationPresent(ConfigField.class))
                 .toArray(Field[]::new);
     }
 

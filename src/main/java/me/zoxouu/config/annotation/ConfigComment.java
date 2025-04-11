@@ -1,8 +1,9 @@
-package me.zoxouu.config.yml;
+package me.zoxouu.config.annotation;
 
 import java.lang.annotation.*;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface YmlConfigField {
+public @interface ConfigComment {
+    String value();
 }

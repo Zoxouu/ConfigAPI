@@ -25,7 +25,7 @@ To use this configuration system, simply clone this repository and include the n
 <dependency>
   <groupId>me.zoxouu</groupId>
   <artifactId>ConfigAPI</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 ```gradle
@@ -34,7 +34,7 @@ maven {
     url = uri("https://repo.zoxouu.me/releases")
 }
 
-implementation("me.zoxouu:ConfigAPI:1.0.0")
+implementation("me.zoxouu:ConfigAPI:1.0.1")
 ```
 
 
@@ -109,41 +109,22 @@ config.save();  // Saves the config to the file
 
 ## Annotations
 
-### `@JsonConfigField`
+### `@ConfigField`
 
-This annotation is used to mark fields that are part of the configuration. Fields marked with `@JsonConfigField` will be automatically processed during saving and loading.
+This annotation is used to mark fields that are part of the configuration. Fields marked with `@ConfigField` will be automatically processed during saving and loading.
 
 ```java
 @JsonConfigField
 private String serverAddress;
 ```
 
-### `@JsonConfigComment`
+### `@ConfigComment`
 
 This annotation allows you to add comments to the fields in the configuration file. The comment will be inserted above the field value in the saved configuration.
 
 ```java
-@JsonConfigComment("This is the server address")
-@JsonConfigField
-private String serverAddress;
-```
-
-### `@YmlConfigField`
-
-This annotation works similarly to `@JsonConfigField`, but it is used for YAML-based configuration files.
-
-```java
-@YmlConfigField
-private String serverAddress;
-```
-
-### `@YmlConfigComment`
-
-This annotation allows you to add comments in the YAML configuration files. The comment will be inserted above the field value in the saved YAML file.
-
-```java
-@YmlConfigComment("This is the server address")
-@YmlConfigField
+@ConfigComment("This is the server address")
+@ConfigField
 private String serverAddress;
 ```
 

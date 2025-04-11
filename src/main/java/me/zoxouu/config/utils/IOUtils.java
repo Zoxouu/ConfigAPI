@@ -1,4 +1,4 @@
-package me.zoxouu.config;
+package me.zoxouu.config.utils;
 
 import java.io.*;
 import java.nio.file.Path;

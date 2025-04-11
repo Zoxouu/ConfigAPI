@@ -1,8 +1,10 @@
-package me.zoxouu.config.yml;
+package me.zoxouu.config;
 
+import me.zoxouu.config.annotation.ConfigComment;
+import me.zoxouu.config.annotation.ConfigField;
+import me.zoxouu.config.utils.IOUtils;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
-import me.zoxouu.config.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +38,7 @@ public class YmlConfig {
             for (Field field : getConfigFields()) {
                 field.setAccessible(true);
 
-                YmlConfigComment comment = field.getAnnotation(YmlConfigComment.class);
+                ConfigComment comment = field.getAnnotation(ConfigComment.class);
                 if (comment != null) {
                     yamlWithComments.append("# ").append(comment.value()).append("\n");
                 }
@@ -57,7 +59,7 @@ public class YmlConfig {
             throw new NullPointerException("You need to define the class fields using setInstance() in your config.");
         }
         return Arrays.stream(instance.getClass().getDeclaredFields())
-                .filter(f -> f.isAnnotationPresent(YmlConfigField.class))
+                .filter(f -> f.isAnnotationPresent(ConfigField.class))
                 .toArray(Field[]::new);
     }
 
