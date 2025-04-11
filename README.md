@@ -42,7 +42,7 @@ implementation("me.zoxouu:ConfigAPI:1.0.1")
 
 ### JSON Configuration
 
-To use the JSON5 configuration system, create a class that extends `JsonConfig` and annotate the fields with `@JsonConfigField`. You can also add comments using the `@JsonConfigComment` annotation.
+To use the JSON5 configuration system, create a class that extends `JsonConfig` and annotate the fields with `@ConfigField`. You can also add comments using the `@ConfigComment` annotation.
 
 ```java
 import me.zoxouu.config.json.JsonConfig;
@@ -51,23 +51,23 @@ import me.zoxouu.config.json.JsonConfigComment;
 
 public class MyConfig extends JsonConfig {
 
-    @JsonConfigField
-    @JsonConfigComment("This is the server port")
+    @ConfigField
+    @ConfigComment("This is the server port")
     private int serverPort = 8080;
 
-    @JsonConfigField
-    @JsonConfigComment("This is the database username")
+    @ConfigField
+    @ConfigComment("This is the database username")
     private String dbUsername = "admin";
 
-    @JsonConfigField
-    @JsonConfigComment("This is the database password")
+    @JConfigField
+    @ConfigComment("This is the database password")
     private String dbPassword = "password";
 }
 ```
 
 ### YAML Configuration
 
-The YAML configuration works similarly to JSON. Define your configuration class extending `YmlConfig` and annotate the fields with `@YmlConfigField` and `@YmlConfigComment`.
+The YAML configuration works similarly to JSON. Define your configuration class extending `YmlConfig` and annotate the fields with `@ConfigField` and `@ConfigComment`.
 
 ```java
 import me.zoxouu.config.yml.YmlConfig;
@@ -76,16 +76,16 @@ import me.zoxouu.config.yml.YmlConfigComment;
 
 public class MyYmlConfig extends YmlConfig {
 
-    @YmlConfigField
-    @YmlConfigComment("This is the server port")
+    @ConfigField
+    @ConfigComment("This is the server port")
     private int serverPort = 8080;
 
-    @YmlConfigField
-    @YmlConfigComment("This is the database username")
+    @ConfigField
+    @ConfigComment("This is the database username")
     private String dbUsername = "admin";
 
-    @YmlConfigField
-    @YmlConfigComment("This is the database password")
+    @ConfigField
+    @ConfigComment("This is the database password")
     private String dbPassword = "password";
 }
 ```
