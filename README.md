@@ -114,7 +114,7 @@ config.save();  // Saves the config to the file
 This annotation is used to mark fields that are part of the configuration. Fields marked with `@ConfigField` will be automatically processed during saving and loading.
 
 ```java
-@JsonConfigField
+@ConfigField
 private String serverAddress;
 ```
 
