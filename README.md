@@ -34,7 +34,7 @@ maven {
     url = uri("https://repo.zoxouu.me/releases")
 }
 
-implementation("me.zoxouu:ConfigAPI:1.0.1")
+implementation("me.zoxouu:ConfigAPI:1.0.2")
 ```
 
 
