@@ -1,11 +1,11 @@
 
 # Configuration Library for JSON5 and YAML
 
-This repository provides a set of utility classes to manage configurations in various formats (JSON5 and YAML). The configuration system supports annotations for fields and comments, allowing you to easily load, save, and modify configuration files in your Java application.
+This repository provides a set of utility classes to manage configurations in various formats (JSON and YAML). The configuration system supports annotations for fields and comments, allowing you to easily load, save, and modify configuration files in your Java application.
 
 ## Features
 
-- Supports configuration files in JSON5 and YAML formats.
+- Supports configuration files in JSON and YAML formats.
 - Allows annotations to define configurable fields and add comments for easy configuration management.
 - Auto-loads configuration files on initialization.
 - Saves configurations back to the respective file formats with proper formatting and optional comments.
@@ -25,7 +25,7 @@ To use this configuration system, simply clone this repository and include the n
 <dependency>
   <groupId>me.zoxouu</groupId>
   <artifactId>ConfigAPI</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 ```gradle
@@ -42,7 +42,7 @@ implementation("me.zoxouu:ConfigAPI:1.0.1")
 
 ### JSON Configuration
 
-To use the JSON5 configuration system, create a class that extends `JsonConfig` and annotate the fields with `@ConfigField`. You can also add comments using the `@ConfigComment` annotation.
+To use the JSON configuration system, create a class that extends `JsonConfig` and annotate the fields with `@ConfigField`.
 
 ```java
 import me.zoxouu.config.json.JsonConfig;
@@ -52,15 +52,12 @@ import me.zoxouu.config.json.JsonConfigComment;
 public class MyConfig extends JsonConfig {
 
     @ConfigField
-    @ConfigComment("This is the server port")
     private int serverPort = 8080;
 
     @ConfigField
-    @ConfigComment("This is the database username")
     private String dbUsername = "admin";
 
     @JConfigField
-    @ConfigComment("This is the database password")
     private String dbPassword = "password";
 }
 ```
@@ -130,5 +127,5 @@ private String serverAddress;
 
 ## Supported Formats
 
-- **JSON5**: JSON format with support for comments.
+- **JSON**: JSON format with support for comments.
 - **YAML**: YAML format with support for comments.

@@ -6,13 +6,20 @@
 
     <groupId>me.zoxouu</groupId>
     <artifactId>ConfigAPI</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>zoxouu-repository</id>
+            <url>https://repo.zoxouu.me/releases</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -26,25 +33,18 @@
     </build>
 
     <dependencies>
-        <!-- GSON -->
+        <!-- JSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.10.1</version>
         </dependency>
 
-        <!-- JSON5 -->
-        <dependency>
-            <groupId>de.marhali</groupId>
-            <artifactId>json5-java</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-
         <!-- YML -->
         <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>2.0</version>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.14.1</version>
         </dependency>
     </dependencies>
 

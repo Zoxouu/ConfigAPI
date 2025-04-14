@@ -1,10 +1,12 @@
 package me.zoxouu.config;
 
-import me.zoxouu.config.annotation.ConfigComment;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import me.zoxouu.config.annotation.ConfigField;
+import me.zoxouu.config.annotation.ConfigComment;
 import me.zoxouu.config.utils.IOUtils;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,39 +15,37 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class YmlConfig {
+public class YamlConfig {
+
     private File file;
+    private YamlConfig instance = null;
 
-    private YmlConfig instance = null;
-
-    public void loadInstance(String fileName, String folderName, YmlConfig instance) {
+    public void loadInstance(String fileName, String folderName, YamlConfig instance) {
         this.file = new File(folderName + "/" + fileName + ".yml");
         this.instance = instance;
         load();
     }
 
     public void save() {
-        Map<String, Object> fieldMap = new LinkedHashMap<>();
-        DumperOptions options = new DumperOptions();
-        options.setIndent(2);
-        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
-        Yaml yaml = new Yaml(options);
+        StringBuilder yamlWithComments = new StringBuilder();
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER));
 
         try {
-            StringBuilder yamlWithComments = new StringBuilder();
-
             for (Field field : getConfigFields()) {
                 field.setAccessible(true);
-
-                ConfigComment comment = field.getAnnotation(ConfigComment.class);
-                if (comment != null) {
-                    yamlWithComments.append("# ").append(comment.value()).append("\n");
+                if (field.isAnnotationPresent(ConfigComment.class)) {
+                    ConfigComment comment = field.getAnnotation(ConfigComment.class);
+                    for (String commentLine : comment.value()) {
+                        yamlWithComments.append("# ").append(commentLine).append("\n");
+                    }
                 }
 
-                Object value = field.get(this);
                 String fieldName = field.getName();
-                yamlWithComments.append(fieldName).append(": ").append(value).append("\n");
+                Object fieldValue = field.get(this.instance);
+                Map<String, Object> tempMap = new LinkedHashMap<>();
+                tempMap.put(fieldName, fieldValue);
+                String yamlField = mapper.writeValueAsString(tempMap);
+                yamlWithComments.append(yamlField.trim()).append("\n");
             }
 
             IOUtils.save(yamlWithComments.toString(), file.getAbsolutePath());
@@ -65,10 +65,11 @@ public class YmlConfig {
 
     private void load() {
         if (!file.exists()) {
+            System.out.println("No config detected, running on default config");
             try {
                 boolean isCreated = IOUtils.create(file);
                 if (!isCreated) {
-                    System.out.println("Can't create the default config file, am I missing some permissions ?");
+                    System.out.println("Can't create the default config file, am I missing some permissions?");
                 } else {
                     save();
                 }
@@ -77,29 +78,26 @@ public class YmlConfig {
             }
         } else {
             try {
-                String yamlContent = IOUtils.readFileToString(file.toPath());
-
-                Yaml yaml = new Yaml();
-
-                Map<String, Object> loadedData = yaml.load(yamlContent);
-
-                if (loadedData == null) {
+                ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+                JsonNode fields = mapper.readTree(file);
+                if (fields == null || fields.isNull()) {
+                    System.out.println("Empty config detected! (" + file.getName() + ") Using default one.");
                     return;
                 }
-
                 boolean needSave = false;
                 for (Field field : getConfigFields()) {
                     String fieldName = field.getName();
 
-                    if (loadedData.containsKey(fieldName)) {
-                        Object value = loadedData.get(fieldName);
+                    if (fields.has(fieldName)) {
+                        JsonNode jsonNode = fields.get(fieldName);
+                        Object value = mapper.treeToValue(jsonNode, field.getType());
+
                         field.setAccessible(true);
-                        field.set(this, value);
+                        field.set(instance, value);
                     } else {
                         needSave = true;
                     }
                 }
-
                 if (needSave) save();
             } catch (IOException | IllegalAccessException e) {
                 throw new RuntimeException(e);
