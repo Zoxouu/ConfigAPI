@@ -45,9 +45,6 @@ implementation("me.zoxouu:ConfigAPI:1.0.2")
 To use the JSON configuration system, create a class that extends `JsonConfig` and annotate the fields with `@ConfigField`.
 
 ```java
-import me.zoxouu.config.json.JsonConfig;
-import me.zoxouu.config.json.JsonConfigField;
-import me.zoxouu.config.json.JsonConfigComment;
 
 public class MyConfig extends JsonConfig {
 
@@ -57,7 +54,7 @@ public class MyConfig extends JsonConfig {
     @ConfigField
     private String dbUsername = "admin";
 
-    @JConfigField
+    @ConfigField
     private String dbPassword = "password";
 }
 ```
@@ -67,9 +64,6 @@ public class MyConfig extends JsonConfig {
 The YAML configuration works similarly to JSON. Define your configuration class extending `YmlConfig` and annotate the fields with `@ConfigField` and `@ConfigComment`.
 
 ```java
-import me.zoxouu.config.yml.YmlConfig;
-import me.zoxouu.config.yml.YmlConfigField;
-import me.zoxouu.config.yml.YmlConfigComment;
 
 public class MyYmlConfig extends YmlConfig {
 
