@@ -1,5 +1,5 @@
 
-# Configuration Library for JSON5 and YAML
+# Configuration Library for JSON and YAML
 
 This repository provides a set of utility classes to manage configurations in various formats (JSON and YAML). The configuration system supports annotations for fields and comments, allowing you to easily load, save, and modify configuration files in your Java application.
 
