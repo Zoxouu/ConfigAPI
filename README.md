@@ -17,9 +17,9 @@ To use this configuration system, simply clone this repository and include the n
 
 ```xml
 <repository>
-  <id>zoxouu-repository-releases</id>
+  <id>zoxouu-repository-snapshots</id>
   <name>Zoxouu Repository</name>
-  <url>https://repo.zoxouu.me/releases</url>
+  <url>https://repo.zoxouu.me/snapshots</url>
 </repository>
 
 <dependency>
@@ -30,8 +30,8 @@ To use this configuration system, simply clone this repository and include the n
 ```
 ```gradle
 maven {
-    name = "reposiliteRepositoryReleases"
-    url = uri("https://repo.zoxouu.me/releases")
+    name = "reposiliteRepositorySnapshots"
+    url = uri("https://repo.zoxouu.me/snapshots")
 }
 
 implementation("me.zoxouu:ConfigAPI:1.0.2")
